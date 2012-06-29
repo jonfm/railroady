@@ -18,13 +18,19 @@ class ModelsDiagram < AppDiagram
   # Process model files
   def generate
     STDERR.puts "Generating models diagram" if @options.verbose
-    get_files.each do |f|
-      begin
-        process_class extract_class_name(f).constantize
-      rescue Exception
-        STDERR.puts "Warning: exception #{$!} raised while trying to load model class #{f}"
-      end
+    root_dirs = @options.additional_roots
+    root_dirs << "./"
 
+    root_dirs.each do |dir|
+      Dir.chdir(dir)
+      get_files.each do |f|
+        begin
+          process_class extract_class_name(f).constantize
+        rescue Exception
+          STDERR.puts "Warning: exception #{$!} raised while trying to load model class #{f}"
+        end
+
+      end
     end
   end
 

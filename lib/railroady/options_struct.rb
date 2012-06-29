@@ -16,6 +16,7 @@ class OptionsStruct < OpenStruct
                      :brief => false,
                      :specify => [],
                      :exclude => [],
+                     :additional_roots => [],
                      :inheritance => false,
                      :join => false,
                      :label => false,
@@ -51,6 +52,9 @@ class OptionsStruct < OpenStruct
       end
       opts.on("-e", "--exclude file1[,fileN]", Array, "Exclude given files") do |list|
         self.exclude = list
+      end
+      opts.on("-X", "--additional-roots file1[,fileN]", Array, "include addition root paths in search") do |list|
+        self.additional_roots = list
       end
       opts.on("-i", "--inheritance", "Include inheritance relations") do |i|
         self.inheritance = i
